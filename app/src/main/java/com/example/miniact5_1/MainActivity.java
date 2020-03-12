@@ -21,8 +21,26 @@ public class MainActivity extends AppCompatActivity {
         ConnectivityManager cm =
                 (ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null &&
-                activeNetwork.isConnectedOrConnecting();
+        if(cm != null)
+        {
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+            boolean isConnected = activeNetwork != null &&
+                    activeNetwork.isConnectedOrConnecting();
+            if(isConnected)
+            {
+                twInfo.setText(activeNetwork.toString());
+                if(activeNetwork.getType() == ConnectivityManager.TYPE_WIFI)
+                {
+                    twState.setText(R.string.wifiCon);
+                }
+                else if(activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE)
+                {
+                    twState.setText(R.string.mobCon);
+                }
+            } else {
+                twState.setText(R.string.noCon);
+            }
+        }
     }
 }
