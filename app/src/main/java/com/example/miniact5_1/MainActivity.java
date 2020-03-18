@@ -29,27 +29,14 @@ public class MainActivity extends AppCompatActivity {
 
         new CheckConnectivityTask().execute();
 
-        /*if(cm != null)
+        if(cm != null)
         {
             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 
-            boolean isConnected = activeNetwork != null &&
-                    activeNetwork.isConnectedOrConnecting();
-            if(isConnected)
-            {
-                twInfo.setText(activeNetwork.toString());
-                if(activeNetwork.getType() == ConnectivityManager.TYPE_WIFI)
-                {
-                    twState.setText(R.string.wifiCon);
-                }
-                else if(activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE)
-                {
-                    twState.setText(R.string.mobCon);
-                }
-            } else {
-                twState.setText(R.string.noCon);
-            }
-        }*/
+            twInfo.setText(activeNetwork.toString());
+
+            new CheckConnectivityTask().execute();
+        }
     }
 
     private class CheckConnectivityTask extends AsyncTask<Activity, Void, String>{
@@ -59,27 +46,18 @@ public class MainActivity extends AppCompatActivity {
             TextView twInfo = findViewById(R.id.textView);
             TextView twState = findViewById(R.id.textView2);
 
-            if(cm != null)
+            if(activeNetwork != null && activeNetwork.isConnectedOrConnecting())
             {
-                activeNetwork = cm.getActiveNetworkInfo();
-
-                boolean isConnected = activeNetwork != null &&
-                        activeNetwork.isConnectedOrConnecting();
-                if(isConnected)
+                if(activeNetwork.getType() == ConnectivityManager.TYPE_WIFI)
                 {
-                    twInfo.setText(activeNetwork.toString());
-                    if(activeNetwork.getType() == ConnectivityManager.TYPE_WIFI)
-                    {
-                        return (String) getText(R.string.wifiCon);
-                    }
-                    else if(activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE)
-                    {
-                        return (String) getText(R.string.mobCon);
-                    }
-                } else {
-                    return (String) getText(R.string.noCon);
+                    return (String) getText(R.string.wifiCon);
+                }
+                else if(activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE)
+                {
+                    return (String) getText(R.string.mobCon);
                 }
             }
+            return (String) getText(R.string.noCon);
         }
     }
 }
