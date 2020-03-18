@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView twInfo = findViewById(R.id.textView);
-        TextView twState = findViewById(R.id.textView2);
 
         cm =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
 
@@ -43,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(Activity... activity) {
-            TextView twInfo = findViewById(R.id.textView);
-            TextView twState = findViewById(R.id.textView2);
 
             if(activeNetwork != null && activeNetwork.isConnectedOrConnecting())
             {
@@ -58,6 +55,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
             return (String) getText(R.string.noCon);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            TextView twState = findViewById(R.id.textView2);
+            twState.setText(result);
         }
     }
 }
