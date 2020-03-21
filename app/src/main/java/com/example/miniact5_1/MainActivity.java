@@ -26,11 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
         cm =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        new CheckConnectivityTask().execute();
-
         if(cm != null)
         {
-            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            activeNetwork = cm.getActiveNetworkInfo();
 
             twInfo.setText(activeNetwork.toString());
 
