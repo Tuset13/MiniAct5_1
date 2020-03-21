@@ -22,18 +22,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView twInfo = findViewById(R.id.textView);
+        seeNetworkState();
+    }
 
-        cm =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-        if(cm != null)
-        {
-            activeNetwork = cm.getActiveNetworkInfo();
-
-            twInfo.setText(activeNetwork.toString());
-
-            new CheckConnectivityTask().execute();
-        }
+        seeNetworkState();
     }
 
     private class CheckConnectivityTask extends AsyncTask<Activity, Void, String>{
@@ -59,6 +55,21 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             TextView twState = findViewById(R.id.textView2);
             twState.setText(result);
+        }
+    }
+
+    public void seeNetworkState(){
+        TextView twInfo = findViewById(R.id.textView);
+
+        cm =(ConnectivityManager)this.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if(cm != null)
+        {
+            activeNetwork = cm.getActiveNetworkInfo();
+
+            twInfo.setText(activeNetwork.toString());
+
+            new CheckConnectivityTask().execute();
         }
     }
 }
